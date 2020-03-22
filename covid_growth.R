@@ -1,7 +1,11 @@
+# Made by John Michael LaSalle
+# jmlasalle.com
+# MIT License
 
 # ---- Set up Environment ----
 library(tidyverse)
 library(lubridate)
+library(here)
 
 options(scipen = 999)
 
@@ -55,4 +59,4 @@ ggplot() +
   guides(col=F)
 
 #Save A4 sized JPG image
-ggsave(paste0(date(max(confirmed_cases$date)), "covid-cases-growth-by-country.jpg"), width = 297, height = 210, dpi = 150, units = "mm")
+ggsave(paste0(date(max(confirmed_cases$date)), "-covid-cases-growth-by-country.jpg"), path=paste0(here(), '/images'), width = 297, height = 210, dpi = 150, units = "mm")
