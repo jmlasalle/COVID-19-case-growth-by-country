@@ -1,2 +1,2 @@
 # COVID-19-case-growth-by-country
-Chart of confirmed COVID-19 cases by country since the first confirmed case in that country using data from the [2019 Novel Coronavirus COVID-19 (2019-nCoV) Data Repository by Johns Hopkins CSSE](https://github.com/CSSEGISandData/COVID-19).
+This script creates an A4 sized graph of confirmed COVID-19 cases by country since the first confirmed case in that country and labels the 10 countries with the highest number of cases. The labels, titles, and file names are parametricized so that it can be run daily. The data is from the [2019 Novel Coronavirus COVID-19 (2019-nCoV) Data Repository by Johns Hopkins CSSE](https://github.com/CSSEGISandData/COVID-19).
