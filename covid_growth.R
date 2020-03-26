@@ -12,8 +12,8 @@ options(scipen = 999)
 # ---- Load and Wrangle Data ----
 # download case data and format timeseries
 # Source: https://github.com/CSSEGISandData/COVID-19/blob/master/csse_covid_19_data/csse_covid_19_time_series/time_series_19-covid-Confirmed.csv
-confirmed_cases <- read.csv("https://raw.githubusercontent.com/CSSEGISandData/COVID-19/master/csse_covid_19_data/csse_covid_19_time_series/time_series_19-covid-Confirmed.csv") %>% 
-  pivot_longer(X1.22.20:X3.21.20, names_to = "date", values_to = "confirmed_cases") %>% 
+confirmed_cases <- read.csv("https://raw.githubusercontent.com/CSSEGISandData/COVID-19/master/csse_covid_19_data/csse_covid_19_time_series/time_series_covid19_confirmed_global.csv") %>% 
+  pivot_longer(starts_with("X"), names_to = "date", values_to = "confirmed_cases") %>% 
   group_by(Country.Region, date) %>% 
   summarise(confirmed_cases = sum(confirmed_cases)) %>% 
   mutate(date = mdy(str_remove(date, 'X')))
