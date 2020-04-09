@@ -31,10 +31,15 @@ dat <- confirmed_cases %>%
   mutate(day = as.integer(date-start_date),
          Country = as.character(Country.Region)) 
 
+# create end points
+points <- dat %>% 
+  group_by(Country) %>% 
+  filter(day == max(day))
+
 # Create name labels for the 10 countries with the most cases
 lab <- dat %>% 
   group_by(Country) %>% 
-  summarise(x = max(day), y = max(confirmed_cases)+1000) %>% 
+  summarise(day = max(day), y = max(confirmed_cases)+6000) %>% 
   top_n(., 10, y) %>% 
   mutate(Country = ifelse(Country == "Korea, South", "South Korea", Country))
 
@@ -45,9 +50,11 @@ latest_date <- paste(as.character(day(max(confirmed_cases$date))),
 
 # ---- Create and Export Graph ----
 ggplot() +
-  geom_line(data = dat, mapping = aes(x=day, y=confirmed_cases, group=Country), col="grey22") +
-  geom_line(data = inner_join(dat, lab), mapping = aes(x=day, y=confirmed_cases, col=Country)) +
-  geom_text(data=lab, mapping = aes(x=x, y=y, label=Country, col=Country)) +
+  geom_line(data = anti_join(dat, lab, by="Country"), mapping = aes(x=day, y=confirmed_cases, group=Country), col="grey22") +
+  geom_point(data=anti_join(points, lab), mapping = aes(x=day, y=confirmed_cases), col="grey22", size=0.75) +
+  geom_line(data = semi_join(dat, lab, by="Country"), mapping = aes(x=day, y=confirmed_cases, col=Country)) +
+  geom_point(data=inner_join(points, lab), mapping = aes(x=day, y=confirmed_cases, col=Country), size=0.75) +
+  geom_text(data=lab, mapping = aes(x=day, y=y, label=Country, col=Country)) +
   scale_colour_viridis_d() +
   labs(title = "Growth of Confirmed COVID-19 Cases by Country",
        subtitle = paste("Data through", latest_date),
